@@ -78,10 +78,12 @@ app.post("/todos",authmiddleware,(req,res)=>{
     const found = users.find(e =>e.username === username);
     if (found){
         found.todos.push(todo);
-        res.json("todo added");
+        console.log(found);
+        res.json(found);
     }
     else{
-        res.json("error occured");
+        console.log("not found");
+        res.json("error occ ured");
     }
 
 })
