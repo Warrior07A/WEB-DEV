@@ -1,13 +1,14 @@
-import websocket from "ws";
-import express from "express";
+const websocket = require("ws");
+const express = require("express");
+const http =  require("http");
 const app = express();
 
 app.use(express.json());
+const server = http.createServer(app);
 
-const wss = new websocket.server({
-    port : 8080
+const wss = new websocket.Server({
+  server 
 });
-
 function close(){()=>{
     console.log("Server has been closed");
     wss.close()
@@ -100,10 +101,8 @@ function printgame(ws){
 let check_opp = 1;
 const array = [];
     const num = 0;
-
-
     wss.on("connection",ws=>{
-    array.push(ws);
+        array.push(ws);
         ws.on("message",m=>{
             m = JSON.parse(m);
             let i = m.i;
@@ -130,7 +129,7 @@ const array = [];
                 
             // })
         })
-
+        
     })
     
     server.listen(8080,'0.0.0.0',()=>{

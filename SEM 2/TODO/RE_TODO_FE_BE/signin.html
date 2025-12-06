@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignIn Page</title>
+</head>
+<body>
+    <h1> SignIn</h1>
+
+    <input type ="text" placeholder="text" id ="authuser">
+    <input type = "password" placeholder="password" id ="authpass">
+    <button id ="signup" onclick = main()> SignIn</button>
+    <div id="party2">
+
+    </div>
+    <script>
+        async function main(){
+            const authuser = document.getElementById("authuser").value;
+            const authpass = document.getElementById("authpass").value;
+            const party2 = document.getElementById("party2");
+            const creds = await fetch("/all",{
+                method:"GET",
+                headers:{
+                    "Content-Type" : "application/json"
+                },
+            })
+            let json =  await creds.json();
+            let match = json.users;
+            let found = match.find(item => item.username == authuser && item.password == authpass);
+            if (found){
+                const h1 = document.createElement("h1");
+                h1.innerHTML = "Welcome " + authuser;
+                party2.appendChild(h1);
+                const id = found.id;
+                await setTimeout(()=>{
+                },1000);
+                window.location.href = "/dashboard/todos/"+id;
+            }            
+            else{
+                const h1 = document.createElement("h1");
+                h1.innerHTML =authuser + "  doesn't exist";
+                await setTimeout(()=>{
+
+                },1000);
+                party2.appendChild(h1);
+                window.location.href = "/";
+            }
+        }
+    </script>
+</body>
+</html> 
