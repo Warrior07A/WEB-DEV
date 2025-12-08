@@ -10,7 +10,6 @@ export async function authmiddlware(req,res,next){
         tokeninputs = jwt.verify(token,JWT_SECRET);
     }catch(e){
         res.status(401).json({
-            "okay" : "1",
             "success": false,
             "error": "Unauthorized, token missing or invalid"
         })
