@@ -2,10 +2,10 @@ import {z} from "zod";
 
 export const signupschema =  z.object(
     {
-        "username":z.string(),
-        "email": z.string(),
-        "password": z.string(),
-        "role": z.string(),
+        username:z.string(),
+        email: z.string(),
+        password: z.string(),
+        role: z.string(),
     }
 )
 
