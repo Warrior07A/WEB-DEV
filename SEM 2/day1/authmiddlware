@@ -1,0 +1,51 @@
+import jwt from "jsonwebtoken";
+import { SECRET } from "./index.js";
+import { usermodel } from "./db.js";
+
+export async function authmiddleware(req, res, next) {
+    try {
+        const token = req.headers.token;
+
+        if (!token) {
+            return res.status(401).json({ 
+                error: "Authorization token is required" 
+            });
+        }
+
+        const tokendata = jwt.verify(token, SECRET);
+        
+        if (!tokendata) {
+            return res.status(401).json({ 
+                error: "Token is not verified" 
+            });
+        }
+
+        const userfind = await usermodel.findOne({
+            email: tokendata.email
+        });
+
+        if (!userfind) {
+            return res.status(401).json({ 
+                error: "User does not exist" 
+            });
+        }
+
+        req.email = tokendata.email;
+        req._id = tokendata._id;
+        next();
+    } catch (error) {
+        if (error.name === "JsonWebTokenError") {
+            return res.status(401).json({ 
+                error: "Invalid authorization token" 
+            });
+        }
+        if (error.name === "TokenExpiredError") {
+            return res.status(401).json({ 
+                error: "Token has expired" 
+            });
+        }
+        res.status(500).json({ 
+            error: "Internal server error" 
+        });
+    }
+}
