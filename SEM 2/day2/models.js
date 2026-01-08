@@ -29,7 +29,7 @@ const bookingSchema = new mongoose.Schema(
         "showId" : {type : mongoose.Schema.Types.ObjectId},
         "seats": {type :Number,required: true},
         "totalAmount": {type :Number,required: true},
-        "bookingDate" : {type : Date , requuired : true}
+        "bookingDate" : {type : Date , required : true}
     }
 )
 export const usermodel = await mongoose.model("users", userSchema);

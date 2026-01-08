@@ -10,7 +10,7 @@ async function authmiddleware (req,res,next){
     const token = req.headers.token;
     try{
         const tokendata = jwt.verify(token,SECRET);
-        const _id = tokendata._id;
+        const _id = tokendata._id; 
         const usercheck = await usermodel.findOne({
             "_id" : _id
         })

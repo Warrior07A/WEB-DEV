@@ -1,6 +1,6 @@
 import mongoose, { Mongoose } from "mongoose";
 
-mongoose.connect("");
+mongoose.connect("psql 'postgresql://neondb_owner:npg_C6aftZ5lQgjS@ep-aged-moon-a4slrtu8-pooler.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'");
 
 const UserSchema = new mongoose.Schema({
     "name" : String,

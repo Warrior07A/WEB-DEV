@@ -1,6 +1,7 @@
 import express from "express";
 import { bookSchema, showSchema, signinSchema, signupschema } from "./types.js";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import { usermodel,showmodel, bookmodel } from "./models.js";
 const SECRET = "akshat";
 const app = express();
@@ -9,8 +10,9 @@ app.use(express.json());
 
 async function adminmiddleware(req,res,next){
     const token = req.headers.authorization;
-    // console.log(token);
-    let tokeninput;
+    if (!token){
+        token = token.split(" ")[1];
+    }
     try{
         const {_id ,role}= jwt.verify(token ,SECRET);
         req._id = _id;
@@ -28,6 +30,13 @@ async function adminmiddleware(req,res,next){
 }
 async function usermiddleware(req,res,next){
     const token = req.headers.authorization;
+    if (!token){
+        res.status(401).json({
+            "message" : "Token missing" 
+        })
+        return;
+    }
+    token = token.split(" ")[1];
     try{
         const {_id ,role}= jwt.verify(token ,SECRET);
         req._id = _id;
@@ -49,7 +58,7 @@ app.post("/signup",async(req,res)=>{
     const {success,data} = signupschema.safeParse(req.body);
     if (success){
         try{
-            if (data.role != "admin" || data.role != "user"){
+            if (data.role != "admin" && data.role != "user"){
                 res.status(400).json({ "message": "role must be either user or admin" });
             }
             const usercheck = await usermodel.findOne({
@@ -80,7 +89,7 @@ app.post("/signup",async(req,res)=>{
             res.json( { "message": "User with this email or username already exists" })
         }
     }
-    if (data.role != "admin" || data.role != "user"){
+    if (data.role != "admin" && data.role != "user"){
         res.status(400).json({ "message": "role must be either user or admin" });
     }else{
         res.status(400).json({ "message": "username, email and password are required" });
@@ -147,10 +156,7 @@ app.post("/shows",adminmiddleware,async(req,res)=>{
 
 app.get("/shows",adminmiddleware,async(req,res)=>{
     const shows = await showmodel.find().lean();
-    let showarr = JSON.stringify(shows,null,4);
-    res.status(201).send(showarr);
-
-
+    res.status(200).json(shows);
 })
 
 app.get("/shows/:showId",adminmiddleware,async(req,res)=>{
