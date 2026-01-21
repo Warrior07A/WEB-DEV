@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model users{
+    id          Int      @id    @unique      @default(autoincrement())
+    name        String 
+    email       String   @unique
+    password    String
+    role        ROLE     @default(contestee)
+    created_at  DateTime @default(now())
+    contests    contests[]
+}
+
+enum ROLE{
+    creator
+    contestee
+}
+
+model contests {
+    id          Int         @id     @default(autoincrement())
+    title       String 
+    description String
+    creator_id  Int 
+    start_time  DateTime  
+    end_time    DateTime
+    created_at  DateTime    @default(now())
+    user users  @relation(fields: [creator_id] , references: [id], onDelete :  Cascade) 
+    mcq_ques    mcq_questions[]
+    dsa_ques    dsa_problems[]
+}
+
+
+model mcq_questions{
+    id                      Int      @id        @default(autoincrement())
+    contest_id              Int       
+    question_text           String 
+    options                 String[]
+    correct_option_index    Int
+    points                  Int                 @default(1)
+    created_at              DateTime            @default(now())
+    creator contests        @relation (fields: [contest_id] , references: [id] , onDelete:  Cascade)
+
+}
+
+model dsa_problems{
+    id                          Int             @id             @default(autoincrement())
+    contest_id                  Int                  
+    title                       String
+    description                 String
+    tags                        String[]
+    points                      Int                             @default(100)
+    time_limit                  Int                             @default(2000)
+    memory_limit                Int                             @default(256)
+    created_at                  DateTime                        @default(now())
+    creator contests            @relation(fields: [contest_id] , references: [id] ,onDelete:  Cascade)
+}
