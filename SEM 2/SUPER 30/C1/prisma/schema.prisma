@@ -87,11 +87,11 @@ model users {
   reviews    reviews[]
 }
 
-
 enum ROLE{
     customer
     owner
 }
+
 enum PRIORITY {
   LOW
   MEDIUM

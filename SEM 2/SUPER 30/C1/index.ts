@@ -230,5 +230,5 @@ app.get("/api/hotels" , authm("both")  ,async(req :authadd  , res: Response )=>{
 })
 
 
-app.listen(3000);
+app.listen(3000, () => console.log("server runnning"));
 

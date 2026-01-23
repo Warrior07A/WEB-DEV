@@ -4,7 +4,7 @@ export const signupschema = z.object ({
     name: z.string(), 
     email: z.email(),
     password: z.string(),
-    role: z.string()
+    role: z.string().optional()
 })
 
 export const signinschema = z.object({
@@ -16,8 +16,8 @@ export const signinschema = z.object({
 export const contestSchema = z.object({
     title: z.string(),
     description: z.string(),
-    startTime: z.iso.time(),
-    endTime: z.iso.time()
+    startTime: z.date(),
+    endTime: z.date()
 })
 
 export const mcqschema = z.object({
@@ -40,14 +40,3 @@ export interface mcqshow{
     options : string[],
     points : number
 }
-// CREATE TABLE dsa_problems (
-//     id,
-//     contest_id,
-//     title,
-//     description,
-//     tags // JSONB ??,
-//     points //default 100,
-//     time_limit // default 2000,
-//     memory_limit // deafult 256,
-//     created_at
-// );

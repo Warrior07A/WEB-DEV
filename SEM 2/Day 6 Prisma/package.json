@@ -1,0 +1,25 @@
+{
+  "name": "day-6-prisma",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/express": "^5.0.6",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/pg": "^8.16.0",
+    "prisma": "^7.2.0"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@prisma/adapter-pg": "^7.2.0",
+    "@prisma/client": "^7.3.0",
+    "bunx": "^0.1.0",
+    "expess": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.17.2",
+    "zod": "^4.3.5"
+  }
+}
