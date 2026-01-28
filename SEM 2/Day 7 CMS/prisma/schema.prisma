@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User{
+    id          Int    @id         @default(autoincrement()) 
+    name        String
+    email       String @unique
+    password    String
+    role        ROLEE
+    createdAt   DateTime     @default(now())
+    Course Course[]
+    Enrollment Enrollment[]
+    Subscription Subscription[]
+}
+
+enum ROLEE{tit
+    admin
+    learner
+}
+
+model Course{
+    id              Int       @id     @default(autoincrement()) 
+    title           String
+    description     String
+    amount          Int
+    adminId         Int
+    createdAt       DateTime            @default(now())
+    User  User      @relation(fields: [adminId], references: [id])
+    Lecture Lecture[]
+    enrollment Enrollment[]
+    Subscription Subscription[]
+
+}
+
+model Lecture{
+    id              Int       @id     @default(autoincrement()) 
+    title           String
+    videoUrl        String 
+    courseId        Int
+    order           Int
+    course Course       @relation(fields: [courseId] ,references: [id] )
+}
+
+
+model Enrollment{
+    id              Int             @default(autoincrement())
+    userId           Int
+    courseId        Int
+    enrolledAt      DateTime       @default(now())
+    @@id([userId ,courseId])
+    User User       @relation(fields: [userId] , references: [id])
+    Courses   Course   @relation(fields: [courseId], references: [id])
+}
+
+
+model Subscription {
+    id              Int       @id     @default(autoincrement()) 
+    userId          Int 
+    courseId        Int
+    amount          Int
+    status          STATUS   
+    createdAt       DateTime        @default(now())
+    User User       @relation(fields: [userId] , references: [id])
+    Courses   Course   @relation(fields: [courseId], references: [id])
+
+}
+
+enum STATUS{
+    SUCCESS
+    FAILES
+}
