@@ -119,14 +119,13 @@ export function MainBody() {
             </div>
 
 
-            <div style={{ display: "flex", flex: 4, justifyContent: "center" }}>
+            <div style={{  padding : 0 , margin : 0 , display: "flex", flex: 4, justifyContent: "center"  }}>
                 <MidMain />
             </div>
 
 
-
-            <div style={{ flex: 1 }}>
-                <RightMain/>
+            <div style={{ marginLeft : "1rem" ,flex: 1   }}>
+                <RightMain/>    
             </div>
 
         </div>

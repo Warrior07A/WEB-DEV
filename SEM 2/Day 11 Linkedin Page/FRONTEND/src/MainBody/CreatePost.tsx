@@ -13,16 +13,16 @@ export function CreatePost() {
                         src={myimage} />
                 </div>
                 <div>
-                    <button style={{ backgroundColor: "white", borderRadius: "1.2rem", border: "1px solid #B2B2B2", padding: "1.2rem", width: "30rem", height: "0.5rem", marginTop: "0.8rem" }}>
-                        <div style={{ paddingRight: "23rem", marginTop: "-0.5rem" }}>
+                    <button style={{ backgroundColor: "white", borderRadius: "1.5rem", border: "1px solid #B2B2B2", padding: "1.2rem", width: "28rem", height: "3rem", marginTop: "0.8rem" }}>
+                        <div style={{ paddingRight: "21rem", marginTop: "-0.3rem" }}>
                             Start a post
                         </div>
                     </button>
                 </div>
 
             </div>
-
-            <div style={{ display: "flex", justifyContent: "space-around" }}>
+        
+            <div style={{ display: "flex", marginTop : "1rem", justifyContent: "space-around" }}>
                 <div >
                     <div className="postbtn" style={{ border: "none", backgroundColor: "#FFFFFF" , display :"flex" , justifyContent : "center"  , alignItems : "center" }}>
                         <div>
