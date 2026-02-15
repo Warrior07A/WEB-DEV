@@ -18,7 +18,7 @@ model User{
     name        String      
     email       String      @unique
     password    String      
-    secretrole  String?      @default("user")
+    secretrole  String?      @default("user")   
     subheading  String?
     phone       Int?     
     coverpic    String?
@@ -32,7 +32,7 @@ model User{
 model Posts{
     id          Int         @id  @default(autoincrement())
     user_id     Int 
-    CreatedAt   BigInt
+    CreatedAt   String
     content     String
     contentimg   String?
     contentvdo  String?

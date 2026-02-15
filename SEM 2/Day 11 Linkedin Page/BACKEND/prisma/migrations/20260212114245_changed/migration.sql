@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Posts" ALTER COLUMN "CreatedAt" SET DATA TYPE TEXT;
