@@ -1,6 +1,6 @@
-import CreatePost from "./CreatePost";
-
-
+import CreatePost from "./Posts/CreatePost";
+import AddPost from "./Posts/AddPostDialog.tsx";
+import {Feed} from "./Posts/Feed.tsx"
 export function MidMain() {
     return (
         <div style = {{ width : "34rem"  ,height : "100vh"}}>
@@ -11,8 +11,13 @@ export function MidMain() {
                 <hr>
                 </hr>
             </div>
+            <div>
+                {/* <AddPost/> */}
+            </div>
+            <div>
+                <Feed/>
+            </div>
 
-            
         </div>
 
 

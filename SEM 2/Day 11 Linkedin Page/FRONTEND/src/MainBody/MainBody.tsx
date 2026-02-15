@@ -18,7 +18,7 @@ export function MainBody() {
 
             <div style={{ flex: 1.2, marginLeft: "2.7vw" }}>
                 {/* profile image compoenent left side top */}
-                <div style={{ backgroundColor: "white", borderRadius: "0.3rem", width: "14rem", "height": "15rem" }}>
+                <div style={{ backgroundColor: "white",  width: "14rem", "height": "15rem" ,border : ".01rem solid #DFDEDA", borderRadius : ".5rem"}}>
                     <div  >
                         <img style={{ display: "block", width: "100%", borderRadius: "8px 8px 0 0" }} src={backimage} />
                     </div>
@@ -40,8 +40,8 @@ export function MainBody() {
                 {/* 2nd component of left main body */}
 
                 <div style={{
-                    backgroundColor: "white", width: "13rem", height: "4rem", marginTop: "1rem", borderRadius: "10px",
-                    fontSize: "0.6rem", padding: ".2rem", paddingLeft: "1rem"}}>
+                    backgroundColor: "white", width: "13rem", height: "4rem", marginTop: "1rem",    
+                    fontSize: "0.6rem", padding: ".2rem", paddingLeft: "1rem", border : ".01rem solid #DFDEDA", borderRadius : ".5rem"}}>
                         <div style = {{display : "flex" , justifyContent  : "space-between" , justifyItems : "center" , alignItems : "center" , width  :"12rem"}}>
                             <div style={{paddingTop :"0.5rem" , paddingBottom : "0.4rem" ,    fontFamily: "system-ui", fontWeight: "600", "lineHeight": "16px",fontSize  :".7rem" }}>
                                 Profile Viewers 
@@ -62,7 +62,7 @@ export function MainBody() {
                 </div>
 
                 {/* 3rd component of left main bodyStyle */}
-                <div style={{ backgroundColor: "white", width: "14rem", height: "4rem", marginTop: "1rem",  borderRadius: "10px" }}>
+                <div style={{ backgroundColor: "white", width: "14rem", height: "4rem", marginTop: "1rem", border : ".01rem solid #DFDEDA", borderRadius : ".5rem"}}>
                     <div style = {{paddingTop : "1rem" , marginLeft  :".7rem"}}>
                         <label  style = {{color : "grey"  ,fontWeight  :"400" , fontSize : ".78rem" , "lineHeight" : ".8rem" , fontFamily : "system-ui" }}> Grow professinally with Premium</label>
                     </div>
@@ -76,9 +76,9 @@ export function MainBody() {
                     </div>
 
                 </div>
+                                {/* 4th componnent of left main bodyyyy */}
 
-
-                <div style={{ backgroundColor: "white", width: "13rem", height: "8rem", marginTop: "1rem",  borderRadius: "10px",padding : ".5rem"}}>
+                <div style={{ backgroundColor: "white", width: "13rem", height: "8rem", marginTop: "1rem",  border : ".01rem solid #DFDEDA", borderRadius : ".5rem" , padding : ".5rem"}}>
                     <div style = {{padding  : ".4rem",display : "flex"  }}>
                         <div style = {{ paddingRight  :"1rem"}}>
                             <FaBookmark/>

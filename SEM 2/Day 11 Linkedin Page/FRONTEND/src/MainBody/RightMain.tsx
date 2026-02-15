@@ -1,6 +1,6 @@
 export function RightMain(){
     return (
-        <div style = {{  paddingLeft : "1rem" , backgroundColor : "white" , borderRadius : 10  , width  :"20rem"}}>
+        <div style = {{  paddingLeft : "1rem" , backgroundColor : "white" , border : ".01rem solid #DFDEDA", borderRadius : ".5rem" , width  :"20rem"}}>
             <div>
                 <div style = {{fontFamily : "system-ui" , fontWeight : "500", fontSize : "1.4rem" , lineHeight : "3rem" , color : "rgba(0, 0 ,0 ,0.9)" , paddingTop  :"0.3rem"}}>
                     LinkedIn News
