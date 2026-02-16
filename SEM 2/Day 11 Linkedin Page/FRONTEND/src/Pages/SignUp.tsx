@@ -1,18 +1,19 @@
 import { useState } from "react"
 import axios from "axios";
-export function SignIn() {
+export function SignUp() {
     const [email , setemail] = useState("");
     const [pass, setpass ] = useState("");
+    const [name, setname] = useState("");
 
-    async function Signin(){
-        axios.post("http://localhost:3001/login" ,
+    async function SignUp(){
+        axios.post("http://localhost:3001/signup" ,
             {
                 "email" : email,
-                "password" : pass 
+                "password" : pass ,
+                "name" : name
         })
         .then((response)=>{
-            localStorage.setItem('token' ,"Bearer " + response.data.token);
-                window.location.href = "http://localhost:3000/home" 
+                window.location.href = "http://localhost:3000/signin" 
         })
     }
     return (
@@ -40,13 +41,17 @@ export function SignIn() {
                             <label > Make the most of your professional life </label>
                         </div>
                         <div style = {{width: "20rem" , height : "20rem" , backgroundColor : "white"}}>
+                        
+                                <label > Name </label><br/>
+                                <input  
+                                    type = "text" 
+                                    onChange={e => setname(e.target.value)}></input><br/>
                                 
                                 <label > Email </label><br/>
                                 <input  
                                     type = "text" 
                                     onChange={e => setemail(e.target.value)}></input><br/>
                                 
-
                                 <label >Password </label><br/>
                                 <input
                                      onChange= {e => setpass (e.target.value)}
@@ -68,7 +73,7 @@ export function SignIn() {
                                     </div>
                                 </div>
                                 <div>
-                                    <button onClick={Signin} > Sign In </button>
+                                    <button onClick={SignUp} > Agree and Join </button>
                                 </div>
                             
 

@@ -1,18 +1,21 @@
-import MainBody from "./MainBody/MainBody";
-import Topbar from "./Topbar/Topbar";
+import { BrowserRouter , Routes , Route } from "react-router-dom";
+import { SignUp } from "./Pages/SignUp";
+import { Home } from "./Pages/Home";
 import "./index.css"
+import { SignIn } from "./Pages/Signin";
 
 export function App(){
-    return( 
-    <div style = {{backgroundColor : "#F4F2EE" , height : "100vh"}}>
-        <header  style = {{backgroundColor : "#FFFFFF"}}>
-            <Topbar/>
-        </header>
-        <div style = {{marginTop : "20px" }}>
-            <MainBody/>
+    return(
+        <div>
+            <BrowserRouter>
+                <Routes>
+                    <Route path = "/signup"  element = {<SignUp/>} ></Route>
+                    <Route path = "/signin" element = {<SignIn/>} > </Route>
+                    <Route path = "/home"  element ={<Home/>} ></Route>
+                </Routes>
+            </BrowserRouter>
         </div>
-
-    </div>)
+    )
 }
 
 export default App;

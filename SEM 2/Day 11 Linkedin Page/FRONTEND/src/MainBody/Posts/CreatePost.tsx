@@ -5,16 +5,15 @@ import article from "../../images/article.png"
 import "../../index.css"
 
 import { useEffect, useState } from "react";
-import AddPost from "./AddPostDialog";
+import { AddPostDialog } from "./AddPostDialog";
 export function CreatePost() {
 
-    const [dialog , setdialog] = useState(0);
+    const [dialog , setdialog] = useState(1);
 
     function dialogpopup(){
         if (!dialog){
             setdialog(1);
         }
-        // else setdialog(1);
     }
     const DialogClose = (e : any)=>{
         if (e.key == 'Escape' ){
@@ -40,7 +39,7 @@ export function CreatePost() {
                         <div style={{ paddingRight: "21rem", marginTop: "-0.3rem" }}>
                             Start a post
                         </div>
-                        {dialog ? <AddPost/> : null }
+                        {dialog ? <AddPostDialog/> : null }
                     </button>
                 </div>
 
