@@ -51,22 +51,27 @@ interface Userdata {
 function authm (reqrole : string)  {
     return ((req : authadd, res : Response , next : NextFunction)=>{
         try{
-            const token = req.headers.authorization?.split(" ")[1] as string;
+            console.log(req.body);
+            const token = req.body.headers.authorization as string;
+            console.log(token);
+            console.log("one");
             let tokenver = jwt.verify(token , SECRET) as JwtPayload;
+            console.log("two");       
             if (!tokenver) return ferr("UNAUTHORISED" , 401, res);
             let id = tokenver.id;
             let role = tokenver.role;
             req.id = id;
             req.role = role;
             if (!id || !role ){
+                console.log("hi1");
                 return ferr("NOT_FOUND" , 404 , res);
             }
             if (reqrole != role && reqrole != "all" ) {
-                console.log("auth mein fata");
                 return ferr( "UNAUTHORSED" , 403 , res);
             }
             next();
         }catch(e){
+            console.log(e);
             return ferr("UNAUTHORISED" , 401, res);
         }
     })
@@ -74,6 +79,7 @@ function authm (reqrole : string)  {
 
 app.post("/signup", async(req : Request , res : Response)=>{
     const signupvalid = SignupSchema.safeParse(req.body);
+    console.log(signupvalid.data)
     if (!signupvalid.success){
         return ferr("INVALID_INPUT" , 400, res);
     }
@@ -95,9 +101,7 @@ app.post("/signup", async(req : Request , res : Response)=>{
         data : {
             name : signupvalid.data.name,
             email : signupvalid.data.email,
-            password : signupvalid.data.password,
-            subheading : signupvalid.data.subheading, 
-            ppic : signupvalid.data.ppic
+            password : signupvalid.data.password
         }
     })
     return res.status(201).json({
@@ -127,9 +131,8 @@ app.post("/login" , async(req : Request , res: Response )=>{
     })
 })
 
-app.post("/posts" , 
-    authm("all") , 
-    async(req : authadd , res: Response )=>{
+app.post("/posts" , authm("all") , async(req : authadd , res: Response )=>{
+
     const postver = PostSchema.safeParse(req.body);
     if (!postver.success){
         return ferr("INVALID_INPUT" , 400, res);
@@ -159,8 +162,6 @@ app.post("/posts" ,
     return res.status(201).json({   
         data : postadd
     })
-    
-
 })
 
 app.get("/posts" ,

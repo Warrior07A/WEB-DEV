@@ -1,10 +1,11 @@
 import { useState } from "react"
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 export function SignUp() {
     const [email , setemail] = useState("");
     const [pass, setpass ] = useState("");
     const [name, setname] = useState("");
-
+    const navigate = useNavigate();
     async function SignUp(){
         axios.post("http://localhost:3001/signup" ,
             {
@@ -13,7 +14,7 @@ export function SignUp() {
                 "name" : name
         })
         .then((response)=>{
-                window.location.href = "http://localhost:3000/signin" 
+                navigate("/signin"); 
         })
     }
     return (

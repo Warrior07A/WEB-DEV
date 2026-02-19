@@ -33,13 +33,19 @@ export function Feed(){
     const [postarr , setpostarr] = useState<IFeed[] | []>([]);
     useEffect(() =>{
         let f = async ()=>{
-            let postsdata = await fetchPostData();
-            // console.log(postsdata.data.posts)
-            setpostarr(postsdata.data.posts);
+            try{
+                let postsdata = await fetchPostData();
+                setpostarr(postsdata.data.posts);
+            }
+            catch(e){
+                if (e){
+                    setpostarr([]);
+
+                }
+            }
         }
         f();
     }, []);
-    console.log(postarr);
     return (
         <div>
             {(postarr.length !=0) ?  
@@ -54,44 +60,7 @@ export function Feed(){
             />    
             ))
              : "Loading....."  }
-            {/* <Post 
-                pp = "https://codeforces.com/userpic.codeforces.org/4836433/title/ae02cda3e186345.jpg"
-                pname = "Akshat Mittal"
-                desc = "Average Enginner "
-                CreatedAt = "Week ago"
-                content = "Excited to share that I’ve been selected as a 𝗦𝗵𝗲𝗙𝗶 Scholar for 𝗦𝗲𝗮𝘀𝗼𝗻 𝟭𝟲 Over the next 6 weeks, I’ll be diving deep into 𝗰𝗿𝘆𝗽𝘁𝗼, 𝗗𝗲𝗙𝗶, and 𝗔𝗜 to expand my knowledge and take bigger, bolder steps in my career. Grateful to Base, Trezor Wallet, Rootstock Collective, and Decentraland for supporting this journey and a special thank you to 𝗠𝗮𝗴𝗴𝗶𝗲 𝗟𝗼𝘃𝗲 for building such an empowering space for women in Web3.Looking forward to learning, building, and growing alongside this amazing community ✨"
-                contentpic = "https://avatars.githubusercontent.com/u/154778752?v=4"
-            />
-            <Post 
-                pp = "https://codeforces.com/userpic.codeforces.org/4836433/title/ae02cda3e186345.jpg"
-                pname = "Akshat Mittal"
-                desc = "Average Enginner "
-                CreatedAt = "Week ago"
-                content = "Excited to share that I’ve been selected as a 𝗦𝗵𝗲𝗙𝗶 Scholar for 𝗦𝗲𝗮𝘀𝗼𝗻 𝟭𝟲 Over the next 6 weeks, I’ll be diving deep into 𝗰𝗿𝘆𝗽𝘁𝗼, 𝗗𝗲𝗙𝗶, and 𝗔𝗜 to expand my knowledge and take bigger, bolder steps in my career. Grateful to Base, Trezor Wallet, Rootstock Collective, and Decentraland for supporting this journey and a special thank you to 𝗠𝗮𝗴𝗴𝗶𝗲 𝗟𝗼𝘃𝗲 for building such an empowering space for women in Web3.Looking forward to learning, building, and growing alongside this amazing community ✨"
-            />
-            <Post 
-                pp = "https://codeforces.com/userpic.codeforces.org/4836433/title/ae02cda3e186345.jpg"
-                pname = "Akshat Mittal"
-                desc = "Average Enginner "
-                CreatedAt = "Week ago"
-                content = "Excited to share that I’ve been selected as a 𝗦𝗵𝗲𝗙𝗶 Scholar for 𝗦𝗲𝗮𝘀𝗼𝗻 𝟭𝟲 Over the next 6 weeks, I’ll be diving deep into 𝗰𝗿𝘆𝗽𝘁𝗼, 𝗗𝗲𝗙𝗶, and 𝗔𝗜 to expand my knowledge and take bigger, bolder steps in my career. Grateful to Base, Trezor Wallet, Rootstock Collective, and Decentraland for supporting this journey and a special thank you to 𝗠𝗮𝗴𝗴𝗶𝗲 𝗟𝗼𝘃𝗲 for building such an empowering space for women in Web3.Looking forward to learning, building, and growing alongside this amazing community ✨"
-            />
-            <Post 
-                pp = "https://codeforces.com/userpic.codeforces.org/4836433/title/ae02cda3e186345.jpg"
-                pname = "Akshat Mittal"
-                desc = "Average Enginner "
-                CreatedAt = "Week ago"
-                content = "Excited to share that I’ve been selected as a 𝗦𝗵𝗲𝗙𝗶 Scholar for 𝗦𝗲𝗮𝘀𝗼𝗻 𝟭𝟲 Over the next 6 weeks, I’ll be diving deep into 𝗰𝗿𝘆𝗽𝘁𝗼, 𝗗𝗲𝗙𝗶, and 𝗔𝗜 to expand my knowledge and take bigger, bolder steps in my career. Grateful to Base, Trezor Wallet, Rootstock Collective, and Decentraland for supporting this journey and a special thank you to 𝗠𝗮𝗴𝗴𝗶𝗲 𝗟𝗼𝘃𝗲 for building such an empowering space for women in Web3.Looking forward to learning, building, and growing alongside this amazing community ✨"
-            />
-            <Post 
-                pp = "https://codeforces.com/userpic.codeforces.org/4836433/title/ae02cda3e186345.jpg"
-                pname = "Akshat Mittal"
-                desc = "Average Enginner "
-                CreatedAt = "Week ago"
-                content = "Excited to share that I’ve been selected as a 𝗦𝗵𝗲𝗙𝗶 Scholar for 𝗦𝗲𝗮𝘀𝗼𝗻 𝟭𝟲 Over the next 6 weeks, I’ll be diving deep into 𝗰𝗿𝘆𝗽𝘁𝗼, 𝗗𝗲𝗙𝗶, and 𝗔𝗜 to expand my knowledge and take bigger, bolder steps in my career. Grateful to Base, Trezor Wallet, Rootstock Collective, and Decentraland for supporting this journey and a special thank you to 𝗠𝗮𝗴𝗴𝗶𝗲 𝗟𝗼𝘃𝗲 for building such an empowering space for women in Web3.Looking forward to learning, building, and growing alongside this amazing community ✨"
-            /> */}
         </div>
-
     )
 }
 

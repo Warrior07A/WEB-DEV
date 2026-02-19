@@ -1,8 +1,10 @@
 import { useState } from "react"
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 export function SignIn() {
     const [email , setemail] = useState("");
     const [pass, setpass ] = useState("");
+    const navigate = useNavigate();
 
     async function Signin(){
         axios.post("http://localhost:3001/login" ,
@@ -11,8 +13,8 @@ export function SignIn() {
                 "password" : pass 
         })
         .then((response)=>{
-            localStorage.setItem('token' ,"Bearer " + response.data.token);
-                window.location.href = "http://localhost:3000/home" 
+            localStorage.setItem('authorization' ,"Bearer " + response.data.token);
+            navigate("/home"); 
         })
     }
     return (

@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import { AddPostDialog } from "./AddPostDialog";
 export function CreatePost() {
 
-    const [dialog , setdialog] = useState(1);
+    const [dialog , setdialog] = useState(0);
 
     function dialogpopup(){
         if (!dialog){
