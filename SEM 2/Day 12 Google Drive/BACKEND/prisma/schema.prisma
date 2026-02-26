@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+model User{
+    id                Int   @id     @default(autoincrement()) 
+    username            String
+    password            String
+    Folder Folder[]
+    File File[]
+}
+
+model Folder{
+    id              Int   @id     @default(autoincrement()) 
+    title           String
+    createdAt       DateTime       @default(now())
+    user_id          Int
+    ParentFolderId  Int? 
+
+    childrenFolder  Folder[]  @relation("parent")
+    Files           File[]
+    parent          Folder?  @relation("parent" , fields: [ParentFolderId] , references: [id])
+    owner           User    @relation(fields: [user_id] , references: [id])
+
+}
+
+model File{
+    id              Int   @id     @default(autoincrement()) 
+    title           String
+    user_id          Int
+    createdAt       DateTime       @default(now())
+    ParentFolderId  Int?
+    url             String
+    // type            FileType    
+
+    parent          Folder?  @relation(fields: [ParentFolderId] , references: [id])    
+    owner           User    @relation(fields: [user_id] , references: [id])
+}
+
+enum FileType{
+    PDF
+    VIDEO
+}
