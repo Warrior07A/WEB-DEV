@@ -15,7 +15,7 @@ datasource db {
 
 
 model User{
-    id                Int   @id     @default(autoincrement()) 
+    id                  String    @id     @default(uuid()) 
     username            String
     password            String
     Folder Folder[]
@@ -23,26 +23,26 @@ model User{
 }
 
 model Folder{
-    id              Int   @id     @default(autoincrement()) 
-    title           String
-    createdAt       DateTime       @default(now())
-    user_id          Int
-    ParentFolderId  Int? 
+    id                  String    @id     @default(uuid()) 
+    title               String
+    createdAt           DateTime       @default(now())
+    user_id             String
+    ParentFolderId      String? 
 
     childrenFolder  Folder[]  @relation("parent")
-    Files           File[]
     parent          Folder?  @relation("parent" , fields: [ParentFolderId] , references: [id])
+    Files           File[]
     owner           User    @relation(fields: [user_id] , references: [id])
 
 }
 
 model File{
-    id              Int   @id     @default(autoincrement()) 
-    title           String
-    user_id          Int
-    createdAt       DateTime       @default(now())
-    ParentFolderId  Int?
-    url             String
+    id                  String    @id     @default(uuid()) 
+    title               String
+    user_id             String
+    createdAt           DateTime       @default(now())
+    ParentFolderId      String?
+    url                 String
     // type            FileType    
 
     parent          Folder?  @relation(fields: [ParentFolderId] , references: [id])    

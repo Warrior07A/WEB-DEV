@@ -13,11 +13,11 @@ export const SigninSchema = z.object({
 export const upload = z.object({
     title : z.string(),
     type : z.enum(["FOLDER" , "FILE"]),
-    parentFolderId : z.number()
+    ParentFolderId : z.string().optional()
 })
 
 export const fileEntry = z.object({
     title : z.string(),
     url : z.string(),
-    ParentFolderId : z.number(),
+    ParentFolderId : z.string(),
 })

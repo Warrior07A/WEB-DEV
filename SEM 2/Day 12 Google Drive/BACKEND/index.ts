@@ -3,7 +3,6 @@ import express, { type NextFunction, type Request, type Response , type Express 
 import jwt, { type JwtHeader, type JwtPayload } from "jsonwebtoken";
 import {  fileEntry, SigninSchema, SignupSchema, upload } from "./types";
 import { prisma } from "./prisma/db";
-import { getpresignedurl } from "./S3";
 import axios from "axios";
 // const SECRET = process.env.SECRET;
 dotenv.config();
@@ -24,7 +23,7 @@ function authm(){
         try{
             let token = req.headers.authorization as string
             if (!token){
-                return ferr("vcsdc",323,res);
+                return ferr("TOKEN_NOT_FOUND",300,res);
             }
             token = token.split(" ")[1] as string;
             let tokeninputs = jwt.verify(token , SECRET) as JwtPayload;
@@ -106,14 +105,14 @@ app.post("/my-drive" , authm() ,async(req : Request , res : Response)=>{
         return ferr("UNAUTHORISED" , 403 ,res);
     }
     let type = uploadver.data.type;
-    let parentFolderId = null;
-    if(uploadver.data.parentFolderId){
-        parentFolderId = uploadver.data.parentFolderId
+    let ParentFolderId = null;
+    if(uploadver.data.ParentFolderId){
+        ParentFolderId = uploadver.data.ParentFolderId
     }
-    if (parentFolderId!= null){
+    if (ParentFolderId != null){
         const folderinfile = await prisma.file.findFirst({
             where : {
-                id : parentFolderId
+                id : ParentFolderId
             }
         })
         if(folderinfile){
@@ -125,7 +124,7 @@ app.post("/my-drive" , authm() ,async(req : Request , res : Response)=>{
             data :{
                 title : uploadver.data.title,
                 user_id : userId,
-                ParentFolderId : parentFolderId
+                ParentFolderId : ParentFolderId || null
             }
         })
         return res.json({
@@ -165,21 +164,30 @@ app.post("/addfile" ,authm(), async(req : Request , res : Response)=>{
 })
 
 
-app.get("/my-drive/folder/:folderId", authm() , async(req : Request , res : Response)=>{
-    let folderId = req.params.folderId || null;
+app.get("/my-drive/folder", authm() , async(req : Request , res : Response)=>{
+    let folderId : string | null = null;
+    if (typeof(req.query.folderId) == "string"){
+        folderId = req.query.folderId
+    } 
     let userId = req.userId;
     if (!userId){
         return ferr("UNAUTHORISED" , 403 ,res);
     }
-    (folderId ? Number(folderId) : null)
     const folderData = await prisma.folder.findMany({
         where:{
+            ParentFolderId : folderId || null
+        }
+    })
+    const fileData = await prisma.file.findMany({
+        where : {
             ParentFolderId : folderId 
         }
     })
+    return res.status(201).json({
+        foldeer : folderData ,
+        files : fileData
+    })
 })
-
-
 
 
 app.listen(3000);
