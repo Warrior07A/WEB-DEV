@@ -3,11 +3,22 @@ import { S3Client, GetObjectCommand , PutObjectCommand } from "@aws-sdk/client-s
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 import "dotenv/config"
 import { ListObjectsV2Command } from "@aws-sdk/client-s3";
+import cors from "cors";
 const R2_ACCESS_KEY_ID =  process.env.R2_ACCESS_KEY_ID
 const R2_URL = process.env.R2_URL;
 const R2_ACCESS_SECRET = process.env.R2_ACCESS_SECRET;
+const FinalVideoUrl = process.env.FinalVideoUrl
 
 const app = express();
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    if (req.method === "OPTIONS") return res.sendStatus(204);
+    next();
+});
+
 
 const S3 = new S3Client({
     region : "auto" ,
@@ -32,20 +43,22 @@ app.get("/all" , async(req : Request , res : Response)=>{
 })
 
 app.post("/getpresignedurl" , async(req : Request , res : Response) =>{
+    const ContentT = req.body;
     const videoPath  = "akshat/"  + Math.random() + ".jpg";
     try{
         const putUrl = await getSignedUrl(
             S3,
             new PutObjectCommand({
-                Bucket : "youtube-100xdevs",
+                // Bucket : "youtube-100xdevs",
+                Bucket : "clown-clone",
                 Key : videoPath,
-                ContentType : "image/jpg"
+                ContentType : ContentT
             })
             , {expiresIn : 3600}
         )
         return res.json({
             putUrl : putUrl ,
-            finalVideoUrl : "https://pub-9ed79a211b484b3f819c6f0883e7ac3e.r2.dev/" + videoPath  
+            finalVideoUrl : FinalVideoUrl + videoPath  
         })
     }catch(e){
         console.log(e);

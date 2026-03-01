@@ -4,11 +4,13 @@ import jwt, { type JwtHeader, type JwtPayload } from "jsonwebtoken";
 import {  fileEntry, SigninSchema, SignupSchema, upload } from "./types";
 import { prisma } from "./prisma/db";
 import axios from "axios";
+import cors from "cors";
 // const SECRET = process.env.SECRET;
 dotenv.config();
 const SECRET = "akshat";
 const app = express();
 app.use(express.json());
+app.use(cors());
 
 
 function ferr(msg : string , code : number , res :Response){
@@ -20,15 +22,16 @@ function ferr(msg : string , code : number , res :Response){
 
 function authm(){
     return ((req: Request, res : Response , next : NextFunction)=>{
+        console.log("hiii");
         try{
             let token = req.headers.authorization as string
+            console.log(token); 
             if (!token){
                 return ferr("TOKEN_NOT_FOUND",300,res);
             }
             token = token.split(" ")[1] as string;
             let tokeninputs = jwt.verify(token , SECRET) as JwtPayload;
             req.userId = tokeninputs.id;
-            console.log("hi");
             next();
         }
         catch(e){
@@ -38,16 +41,14 @@ function authm(){
 }
 
 
-
 app.post("/signup",async(req: Request , res : Response )=>{
     const signupverify = SignupSchema.safeParse(req.body);
     if(!signupverify.success){
         return ferr("INVALID INPUTS" , 401, res);
     }
-    console.log("hi2");
     const usercheck = await prisma.user.findFirst({
         where:{
-            username : signupverify.data.username
+            email : signupverify.data.email
         }
     })
     if (usercheck){
@@ -55,7 +56,7 @@ app.post("/signup",async(req: Request , res : Response )=>{
     }
     const useradd = await prisma.user.create({
         data:{
-            username : signupverify.data.username,
+            email : signupverify.data.email,
             password : signupverify.data.password
         }
     })
@@ -72,17 +73,18 @@ app.post("/signin" , async(req: Request , res : Response)=>{
     }
     const usercheck = await prisma.user.findFirst({
         where:{
-            username : signinverify.data.username,
+            email : signinverify.data.email,
             password : signinverify.data.password
         }
     })
     if (!usercheck){
+        console.log("here");
         return ferr("USER_DOESNOT_EXISTS" , 404, res);
     }
     
     const useradd = await prisma.user.create({
         data:{
-            username : signinverify.data.username,
+            email : signinverify.data.email,
             password : signinverify.data.password
         }
     })
@@ -94,8 +96,7 @@ app.post("/signin" , async(req: Request , res : Response)=>{
     })
 })
 
-
-app.post("/my-drive" , authm() ,async(req : Request , res : Response)=>{
+app.post("/drive" , authm() ,async(req : Request , res : Response)=>{
     const uploadver = upload.safeParse(req.body);
     if (!uploadver.success){
         return ferr("INALID_INPUTS" , 401 ,res);
@@ -115,6 +116,7 @@ app.post("/my-drive" , authm() ,async(req : Request , res : Response)=>{
                 id : ParentFolderId
             }
         })
+        console.log(folderinfile)
         if(folderinfile){
             return ferr("FOLDER CANNOT BE IN A FILE " ,300, res);
         }
@@ -164,7 +166,7 @@ app.post("/addfile" ,authm(), async(req : Request , res : Response)=>{
 })
 
 
-app.get("/my-drive/folder", authm() , async(req : Request , res : Response)=>{
+app.get("/drive/folder", authm() , async(req : Request , res : Response)=>{
     let folderId : string | null = null;
     if (typeof(req.query.folderId) == "string"){
         folderId = req.query.folderId
@@ -178,16 +180,17 @@ app.get("/my-drive/folder", authm() , async(req : Request , res : Response)=>{
             ParentFolderId : folderId || null
         }
     })
+    // console.log(folderData);
     const fileData = await prisma.file.findMany({
         where : {
             ParentFolderId : folderId 
         }
     })
     return res.status(201).json({
-        foldeer : folderData ,
+        folder : folderData ,
         files : fileData
     })
 })
 
 
-app.listen(3000);
+app.listen(3001);

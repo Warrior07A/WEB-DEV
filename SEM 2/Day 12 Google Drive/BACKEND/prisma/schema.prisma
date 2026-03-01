@@ -16,7 +16,7 @@ datasource db {
 
 model User{
     id                  String    @id     @default(uuid()) 
-    username            String
+    email               String
     password            String
     Folder Folder[]
     File File[]
