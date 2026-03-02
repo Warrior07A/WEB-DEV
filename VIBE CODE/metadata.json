@@ -1,0 +1,5 @@
+{
+  "name": "DriveSelect - Premium Car Booking",
+  "description": "A comprehensive car booking platform featuring a React frontend with a Bun/Express/Prisma backend architecture. Includes AI-powered car recommendations via Gemini.",
+  "requestFramePermissions": []
+}
