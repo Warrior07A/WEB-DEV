@@ -25,9 +25,9 @@ function authm(){
         console.log("hiii");
         try{
             let token = req.headers.authorization as string
-            console.log(token); 
+            console.log("ghjkl", token);
             if (!token){
-                return ferr("TOKEN_NOT_FOUND",300,res);
+                return ferr("TOKEN_NOT_FOUND",500,res);
             }
             token = token.split(" ")[1] as string;
             let tokeninputs = jwt.verify(token , SECRET) as JwtPayload;
@@ -118,7 +118,7 @@ app.post("/drive" , authm() ,async(req : Request , res : Response)=>{
         })
         console.log(folderinfile)
         if(folderinfile){
-            return ferr("FOLDER CANNOT BE IN A FILE " ,300, res);
+            return ferr("FOLDER CANNOT BE IN A FILE " ,500, res);
         }
     }
     if (type == "FOLDER"){
@@ -166,11 +166,13 @@ app.post("/addfile" ,authm(), async(req : Request , res : Response)=>{
 })
 
 
-app.get("/drive/folder", authm() , async(req : Request , res : Response)=>{
+app.get("/drive/folder" , authm(), async(req : Request , res : Response)=>{
     let folderId : string | null = null;
     if (typeof(req.query.folderId) == "string"){
         folderId = req.query.folderId
     } 
+    console.log("xscbn");
+
     let userId = req.userId;
     if (!userId){
         return ferr("UNAUTHORISED" , 403 ,res);

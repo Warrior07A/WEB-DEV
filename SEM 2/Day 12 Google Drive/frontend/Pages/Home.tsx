@@ -36,23 +36,25 @@ export function Home() {
         console.log("hi");
         const url = window.location.search;
         console.log(url);
+        const token = localStorage.getItem("token");
+        console.log("gfhj", token);
         let res = await axios.get("http://localhost:3001/drive/folder" + url, {
             headers: {
                 'Content-Type': "application/json",
-                'Authorization': localStorage.getItem("token")
+                'Authorization': token
             }
         });
         console.log(res.data.folder);
-        // if (res.data) {
-        //     let arr = res.data.folder.map((folder: any) => {
-        //         return {
-        //             id: folder.id,
-        //             title: folder.title,
-        //             ParentFolderId: folder.ParentFolderId
-        //         }
-        //     })
-        //     setfarr(arr);
-        // }
+        if (res.data) {
+            let arr = res.data.folder.map((folder: any) => {
+                return {
+                    id: folder.id,
+                    title: folder.title,
+                    ParentFolderId: folder.ParentFolderId
+                }
+            })
+            setfarr(arr);
+        }
     }
 
     async function CreateFolder() {

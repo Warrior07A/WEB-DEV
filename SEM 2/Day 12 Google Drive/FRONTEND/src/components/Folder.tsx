@@ -10,7 +10,7 @@ export default function Folder(  props : {title : string , id : string , ParentF
     return (
         <div >
             <div onClick={(e)=>{folderChange()}} className = " w-40 h-10 bg-amber-300 rounded text-center align-center cursor-pointer">
-                <label> {props.title} </label>
+                <label className="pointer-cursor"> {props.title} </label>
             </div>
         </div>
 
